@@ -1,0 +1,54 @@
+# Goal: Find function that mimimises the error
+# Mean Squared Error function: E=(Σ[from i=0 up until n](y_i-(mx_i+b))^2)/n
+# n = amount of points
+# For each point from 1st([0]) to last, we subtract the position of the function y value from the actual y value of the point.
+# This is the error function that we're trying to minimise when it comes to linear regression.
+# The partial derivative of E with respect to m tells us how much the error changes if we make a small change to m, while keeping b fixed, as well as the other way around.
+# In other words, the partial derivative is a way to measure the sensitivity of the error to changes in the parameters. 
+# In the context of linear regression, the terms "loss function" and "mean squared error (MSE) are often used interchangeably, although they are not exactly the same thing.
+
+***
+
+import pandas as pd #to import dataset
+import matplotlib.pyplot as plt #for visualisation
+
+data=pd.readcsv('data.csv') #insert relevant dataset
+
+# Now we want to use gradient descent to optimize the parameters (slope m and intercept b). 
+# During each iteration, you would adjust the parameters m and b in the direction that minimizes the MSE. 
+
+def gradient_descent(m_now, b_now, points, L): #L = learning rate
+    m_gradient = 0
+    b_gradient = 0
+
+    n = len(points)
+
+    for i in range(n):
+        x = points.iloc[i].studytime # iloc is used to access rows and columns of a DataFrame by index
+        y = points.iloc[i].score
+      
+        # Compute partial derivatives of the loss function with respect to m and b
+        m_gradient += -2 * x * (y - (m_now * x + b_now))
+        b_gradient += -2 * (y - (m_now * x + b_now))
+
+    # Update parameters using gradients and learning rate
+    m = m_now - m_gradient * L
+    b = b_now - b_gradient * L
+  	return m, b
+
+m = 0
+b = 0
+L = 0.0001
+epochs = 1000
+
+for i in range(epochs):
+  m, b = gradient_descent(m, b, data, L)
+
+print(m, b)
+
+plt.scatter(data.studytime, data.score, color="black")
+plt.plot(list(range(20, 80)), [m * x + b for x in range(20, 80)], color = "red")
+plt.show()
+
+
+
