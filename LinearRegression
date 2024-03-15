@@ -1,3 +1,5 @@
+# What is a regression? A regression analysis is a method for modelling relationships between variables.
+
 # Goal: Find function that mimimises the error
 # Mean Squared Error function: E=(Σ[from i=0 up until n](y_i-(mx_i+b))^2)/n
 # n = amount of points
