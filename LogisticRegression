@@ -1,0 +1,63 @@
+# In a logistic regression, the dependent variable is a dichotomous variable, i.e. a variable with only two values (1/0).
+# So, for example, with the help of logistic regression, we can determine what has an influence on whether a certain disease is present(1) or not(0).
+# The probability for the occurence is estimated.
+# f(z) = 1 / (1+e^-z)
+# z = the equation for linear regression (b_1.x_1 + b_2.x_2 + ... + b_k + x_k + a)
+# Thus, the probability that the dependent variable is 1 is given by this equation for given values of the independent variables:
+# P(y=1|x_1,...,x_n) = 1 / (1+e^-b_1.x_1 ... + b_k + x_k + a)
+# For example:
+# P(having the disease) = 1 / (1 + e^-(b_1.Age+b_2.Male+b_3.Smoker + a))
+# The probability is a function of age, gender, and smoking status.
+# Python can be used to calculate the coefficients b_1, b_2 to b_k and a:
+
+import numpy as np
+from sklearn.linear_model import LogisticRegression
+
+# Example data: age, gender (0 for female, 1 for male), smoking status (0 for non-smoker, 1 for smoker)
+X = np.array([[25, 1, 0],
+              [30, 0, 1],
+              [40, 1, 1],
+              [35, 0, 0],
+              [50, 1, 1]])
+
+# Example target variable: whether the disease is present (1) or not (0)
+y = np.array([0, 1, 1, 0, 1])
+
+# Initialize logistic regression model
+model = LogisticRegression()
+
+# Train the model
+model.fit(X, y)
+
+# Get the coefficients (b_1, b_2, ..., b_k) and intercept (a)
+coefficients = model.coef_
+intercept = model.intercept_
+
+# Print the coefficients and intercept
+print("Coefficients:", coefficients)
+print("Intercept:", intercept)
+
+# After obtaining the coefficients and intercept, you can plot the logistic function to
+# visualize the relationship between the independent variables and the probability of the disease being present:
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Logistic function
+def logistic_function(x, b, a):
+    return 1 / (1 + np.exp(-(b * x + a)))
+
+# Age range for plotting
+age_range = np.linspace(20, 60, 100)
+
+# Calculating probabilities for different values of age
+probabilities = logistic_function(age_range, coefficients[0][0], intercept[0])
+
+# Plotting the graph
+plt.plot(age_range, probabilities, color='blue')
+plt.xlabel('Age')
+plt.ylabel('Probability of Disease Presence')
+plt.title('Logistic Regression Curve')
+plt.grid(True)
+plt.show()
+
