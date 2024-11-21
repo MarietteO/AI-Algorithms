@@ -1,6 +1,7 @@
 # What is a regression? A regression analysis is a method for modelling relationships between variables.
 
 # Goal: Find function that mimimises the error (In the context of regression analysis, "error" refers to the difference between the observed data values and the values predicted by the regression model. Minimising the error means finding the line that best fits the data.)
+# In the context of a large language model, minimizing the error involves adjusting the model's parameters so that its predictions align as closely as possible with a training dataset. 
 # The Mean Squared Error (MSE) function measures the average of the squared differences between the actual observed values and the predicted values from a regression model. That way, it quantifies how well the model fits the data. (Squaring ensures all errors are treated as positive.)
 # Mean Squared Error function: E=(Σ[from i=0 up until n](y_i-(mx_i+b))^2)/n
 # n = amount of points
